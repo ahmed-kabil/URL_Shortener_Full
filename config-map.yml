@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: url-config-map
 data:
-  db_host: mongodb-service
+  db_host: url-mongodb-srv
   BACK_HOST: "url.ahmedkabil.me"
