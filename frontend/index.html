@@ -1,52 +1,258 @@
-<!DOCTYPE html> <!-- تعريف نوع المستند كـ HTML5 -->
-<html lang="en"> <!-- بداية صفحة HTML وتحديد اللغة -->
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" /> <!-- تحديد الترميز -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- لجعل الصفحة متجاوبة -->
-  <title>URL Shortener Dashboard</title> <!-- عنوان الصفحة -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>URL Shortener Dashboard</title>
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts - Inter & Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Feather Icons for SVG icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.css" />
+  
+<link rel="stylesheet" href="style.css">
 
-  <!-- ✅ ربط ملف التنسيق الخارجي -->
-  <link rel="stylesheet" href="style.css" />
-  <script src="./script.js"></script>
   <script src="./app-config.js"></script>
 </head>
 
-<body>
-  <!-- 🧩 الصندوق الرئيسي للتطبيق -->
-  <div class="app">
-    <h1>🔗 URL Shortener Dashboard</h1>
-
-    <!-- 🗂️ كارت إدخال الرابط -->
-    <div class="card">
-      <div id="input_div">
-        <input type="text" id="longUrl" placeholder="Enter a long URL..." />
-        <button id="paste_btn" onclick="pasteUrl()">📋 Paste</button>
-      </div>
+<body class="bg-gradient-to-br from-slate-50 to-slate-100">
+  <!-- Main Container -->
+  <div class="min-h-screen flex items-center justify-center py-8 px-4">
+    <div class="w-full max-w-2xl">
       
-      <br>
-      <button id="shorten_btn" onclick="shortenUrl()">Shorten URL</button>
-       <div id="result_div" style="display:none;" >  <!-- style="display:none;" -->
-           <div id="res_div">
-             <p id="loading" class="loading" style="display:none;" >Shortening your link...</p>
-             <p id="shortUrl" class="fade-in"  style="display:none;">
-                Short URL: <a href="#" id="shortLink" target="_blank"></a>
-             </p>
-           </div>
-           <button id="copy_btn" onclick="copyUrl()" >📎 Copy</button>
-    </div>
-    </div>
+      <!-- Header Section -->
+      <div class="text-center mb-10">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full glass mb-4">
+          <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.658 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+          </svg>
+        </div>
+        <h1 class="text-4xl font-black text-slate-900 mb-2" style="font-family: 'Poppins', sans-serif;">
+          URL Shortener Dashboard
+        </h1>
+        <p class="text-slate-500 text-lg">Transform long URLs into short, shareable links</p>
+      </div>
 
-    <!-- 📊 قسم الإحصائيات -->
-    <div class="metrics">
-      <h2>📊 Metrics Overview</h2>
-      <p>URLs Shortened: <span id="shortened">0</span></p>
-      <p>Redirects: <span id="redirects">0</span></p>
+      <!-- Main Card -->
+      <div class="glass rounded-3xl shadow-xl p-8 mb-8">
+        
+        <!-- Input Section -->
+        <div class="mb-8">
+          <label class="block text-sm font-semibold text-slate-700 mb-3">Your Long URL</label>
+          <div class="flex gap-3">
+            <input
+              type="text"
+              id="longUrl"
+              placeholder="https://example.com/very-long-url-that-needs-shortening"
+              class="flex-1 px-4 py-3 rounded-xl focus:ring-2 focus:ring-indigo-600"
+            />
+            <button
+              id="paste_btn"
+              onclick="pasteUrl()"
+              class="btn-icon rounded-xl px-4 py-3"
+              title="Paste from clipboard"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Action Button -->
+        <button
+          id="shorten_btn"
+          onclick="shortenUrl()"
+          class="btn-primary w-full py-4 rounded-xl text-lg font-bold mb-8"
+        >
+          ✨ Shorten URL
+        </button>
+
+        <!-- Result Section (Hidden by default) -->
+        <div id="result_div" class="hidden">
+          <!-- Loading State -->
+          <div id="loading_state" class="text-center py-8">
+            <div class="flex items-center justify-center gap-3">
+              <div class="spinner"></div>
+              <p class="text-slate-600 font-medium">Shortening your link...</p>
+            </div>
+          </div>
+
+          <!-- Result State -->
+          <div id="result_state" class="hidden fade-in">
+            <div class="result-box mb-6">
+              <div class="result-box-content">
+                <div class="result-box-label">Your Short URL</div>
+                <a
+                  href="#"
+                  id="shortLink"
+                  target="_blank"
+                  class="result-box-link"
+                ></a>
+              </div>
+              <button
+                id="copy_btn"
+                onclick="copyUrl()"
+                class="btn-primary px-4 py-3 rounded-lg flex items-center gap-2 whitespace-nowrap"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                Copy
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Metrics Section -->
+      <div>
+        <h2 class="text-2xl font-bold text-slate-900 mb-6" style="font-family: 'Poppins', sans-serif;">
+          📊 Metrics Overview
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          
+          <!-- URLs Shortened Card -->
+          <div class="metric-card">
+            <div class="metric-icon">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.658 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+              </svg>
+            </div>
+            <div class="metric-value" id="shortened">0</div>
+            <div class="metric-label">URLs Shortened</div>
+          </div>
+
+          <!-- Redirects Card -->
+          <div class="metric-card">
+            <div class="metric-icon">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <div class="metric-value" id="redirects">0</div>
+            <div class="metric-label">Redirects</div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <!-- 📢 إشعار التوست -->
+  <!-- Toast Notification -->
   <div id="toast" class="toast"></div>
 
-  
+  <!-- Script: Include main functionality -->
+  <script src="./script.js"></script>
+
+  <script>
+    // UI Helper Functions
+    function showToast(message, type = "success") {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.className = `toast ${type} show`;
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }
+
+    function pasteUrl() {
+      navigator.clipboard.read().then((items) => {
+        for (let item of items) {
+          if (item.types.includes("text/plain")) {
+            item.getType("text/plain").then((blob) => {
+              blob.text().then((text) => {
+                document.getElementById("longUrl").value = text;
+                document.getElementById("longUrl").focus();
+              });
+            });
+          }
+        }
+      }).catch(() => {
+        showToast("Unable to access clipboard", "error");
+      });
+    }
+
+    function copyUrl() {
+      const shortUrl = document.getElementById("shortLink").href;
+      navigator.clipboard.writeText(shortUrl).then(() => {
+        showToast("✓ Copied to clipboard!", "success");
+      }).catch(() => {
+        showToast("Failed to copy", "error");
+      });
+    }
+
+    function showResult(shortUrl) {
+      const resultDiv = document.getElementById("result_div");
+      const loadingState = document.getElementById("loading_state");
+      const resultState = document.getElementById("result_state");
+      const shortLink = document.getElementById("shortLink");
+
+      shortLink.href = shortUrl;
+      shortLink.textContent = shortUrl;
+
+      loadingState.classList.add("hidden");
+      resultState.classList.remove("hidden");
+      resultDiv.classList.remove("hidden");
+    }
+
+    function hideResult() {
+      const resultDiv = document.getElementById("result_div");
+      resultDiv.classList.add("hidden");
+      document.getElementById("loading_state").classList.remove("hidden");
+      document.getElementById("result_state").classList.add("hidden");
+    }
+
+    // Override the shortenUrl function to use our new UI
+    const originalShortenUrl = window.shortenUrl;
+    window.shortenUrl = function() {
+      const input = document.getElementById("longUrl");
+      
+      if (!input.value.trim()) {
+        showToast("⚠️ Please enter a valid URL", "error");
+        return;
+      }
+
+      hideResult();
+      const resultDiv = document.getElementById("result_div");
+      resultDiv.classList.remove("hidden");
+
+      let req = {
+        "url": input.value
+      };
+
+      fetch(`${backend_host}/api/shorten`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req),
+      })
+      .then(res => res.json())
+      .then(data => {
+        const shortUrl = data.data.url.short_url;
+        if (!shortUrl.startsWith("http")) {
+          showResult("https://" + shortUrl);
+        } else {
+          showResult(shortUrl);
+        }
+        showToast("✓ URL shortened successfully!", "success");
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        resultDiv.classList.add("hidden");
+        showToast("✗ Failed to shorten URL", "error");
+      });
+    };
+  </script>
+
 </body>
 </html>

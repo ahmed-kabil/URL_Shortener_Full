@@ -1,55 +1,42 @@
-let backend_host ;
+let backend_host;
 
-// const backend_host = `http://${window.backhost.host}:${window.backhost.port}`
+// Initialize backend host from config
+setTimeout(() => {
+  backend_host = `${window.backhost.host}`;
 
-setTimeout(()=>{
-  backend_host = `${window.backhost.host}` ;
+  const gen_counter = document.querySelector("#shortened");
+  const red_counter = document.getElementById("redirects");
 
-const gen_counter = document.querySelector("#shortened");
-const red_counter = document.getElementById("redirects");
-
-const gen_count_fun  = async () => {
-
-    setInterval( async () =>{
-      console.log(backend_host)
-        await fetch(`${backend_host}/api/gencount`)
+  // Fetch URLs shortened count
+  const gen_count_fun = async () => {
+    setInterval(async () => {
+      await fetch(`${backend_host}/api/gencount`)
         .then(res => res.json())
         .then((data) => {
-            
-            let gen_count = data.count;
-            gen_counter.innerText = gen_count
-        })    
-},1000)
-}
+          let gen_count = data.count;
+          gen_counter.innerText = gen_count;
+        })
+        .catch(err => console.error("Error fetching gen count:", err));
+    }, 1000);
+  };
 
-gen_count_fun();
+  gen_count_fun();
 
-
-const red_count_fun  = async () => {
-
-    setInterval( async () =>{
-        await fetch(`${backend_host}/api/redcount`)
+  // Fetch redirects count
+  const red_count_fun = async () => {
+    setInterval(async () => {
+      await fetch(`${backend_host}/api/redcount`)
         .then(res => res.json())
         .then((data) => {
-            
-            let red_count = data.count;
-            red_counter.innerText = red_count
-        }) 
-},1000)
-}
+          let red_count = data.count;
+          red_counter.innerText = red_count;
+        })
+        .catch(err => console.error("Error fetching redirect count:", err));
+    }, 1000);
+  };
 
-red_count_fun();
-  
-},500)
-
-    // ✅ دالة لإظهار رسالة Toast
-    function showToast(message, color = "#4caf50") {
-      const toast = document.getElementById("toast");
-      toast.textContent = message;
-      toast.style.background = color;
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 2000);
-    }
+  red_count_fun();
+}, 500);
 
     // ✅ دالة لتقصير الرابط (محاكاة)
     function shortenUrl() {

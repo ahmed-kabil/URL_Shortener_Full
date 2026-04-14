@@ -1,134 +1,259 @@
-/* 🌐 تنسيق عام للصفحة */
-body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-}
-#shortLink{
-  color: #2196f3;
-  text-decoration: none;
-  font-weight: bold;
-}
-/* 🧩 حاوية التطبيق */
-.app {
-  background: white;
-  width: 70%; /* ✅ جعل الصفحة أوسع */
-  max-width: 900px;
-  margin-top: 60px;
-  padding: 40px; /* ✅ زيادة المسافات الداخلية */
-  border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    h1, h2, h3 {
+      font-family: 'Poppins', sans-serif;
+    }
 
-/* 🗂️ تنسيق الكارد */
-.card {
-  margin: 40px 0;
-}
+    /* Tailwind config for custom colors */
+    :root {
+      --primary: #4F46E5;
+      --primary-dark: #4338CA;
+      --primary-light: #6366F1;
+      --bg-light: #F8FAFC;
+      --bg-secondary: #F1F5F9;
+      --border-light: #E2E8F0;
+      --text-primary: #0F172A;
+      --text-secondary: #64748B;
+    }
 
-.card input {
-  width: 80%;
-  padding: 14px; /* ✅ مساحة داخلية أكبر */
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  margin-bottom: 16px; /* ✅ مساحة أكبر تحت الحقل */
-  font-size: 16px;
-}
+    /* Gradient background */
+    body {
+      background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-secondary) 100%);
+      min-height: 100vh;
+    }
 
-.card button {
-  margin: 10px; /* ✅ مسافة مريحة بين الأزرار */
-  padding: 12px 20px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  background-color: #2196f3;
-  color: white;
-  font-size: 15px;
-  transition: background 0.3s ease;
-}
+    /* Glassmorphism effect */
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
 
-.card button:hover {
-  background-color: #1976d2;
-}
+    /* Smooth transitions */
+    input, button, textarea {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-/* 📊 قسم الإحصائيات */
-.metrics {
-  background: #f5f5f5;
-  padding: 25px;
-  border-radius: 12px;
-  margin-top: 40px;
-}
+    /* Input styling */
+    input[type="text"] {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid var(--border-light);
+      color: var(--text-primary);
+    }
 
-.metrics h2 {
-  margin-bottom: 20px;
-}
+    input[type="text"]:focus {
+      background: white;
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
 
-/* 🌀 رسالة التحميل */
-.loading {
-  color: #666;
-  font-size: 15px;
-}
+    input[type="text"]::placeholder {
+      color: var(--text-secondary);
+    }
 
-/* ✨ تأثير الظهور */
-.fade-in {
-  animation: fade 0.5s ease-in;
-}
+    /* Button styling */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.2);
+    }
 
-#result_div {
-  width: 100%;
-  border-radius: 15px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 15px;
-  align-items: center;
-  padding-left: 10px;
-  padding-right: 10px;
-}
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    }
 
-#res_div {
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.2);
+    }
 
-border-radius: 5px;
-border: 1px solid #ccc;
-width: 80%;
-padding-left: 14px;
-padding-right: 14px;
+    .btn-secondary {
+      background: rgba(79, 70, 229, 0.1);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      font-weight: 600;
+    }
 
-}
+    .btn-secondary:hover {
+      background: rgba(79, 70, 229, 0.15);
+    }
 
+    .btn-icon {
+      background: white;
+      border: 1px solid var(--border-light);
+      color: var(--text-secondary);
+      padding: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
+    .btn-icon:hover {
+      background: var(--bg-secondary);
+      color: var(--primary);
+    }
 
-#copy_btn{
- padding: 12px 20px;
-  
-}
-@keyframes fade {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+    /* Metric cards */
+    .metric-card {
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
 
-/* 📢 Toast Notification */
-.toast {
-  position: fixed;
-  bottom: 40px; /* ✅ إبعاد الرسالة عن العناصر */
-  right: 40px; /* ✅ مسافة مريحة من الجانب */
-  background: #4caf50;
-  color: white;
-  padding: 14px 24px;
-  border-radius: 8px;
-  font-size: 15px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.4s ease;
-  z-index: 9999;
-}
+    .metric-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+      border-color: var(--primary);
+    }
 
-.toast.show {
-  opacity: 1;
-  transform: translateY(0);
-}
+    .metric-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      color: var(--primary);
+      font-size: 24px;
+    }
+
+    .metric-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 8px 0;
+    }
+
+    .metric-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Result box */
+    .result-box {
+      background: rgba(248, 250, 252, 0.5);
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .result-box-content {
+      flex: 1;
+      text-align: left;
+    }
+
+    .result-box-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .result-box-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      word-break: break-all;
+      font-size: 16px;
+    }
+
+    .result-box-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Loading animation */
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(79, 70, 229, 0.2);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Toast notifications */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background: white;
+      color: var(--text-primary);
+      padding: 16px 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 9999;
+      font-weight: 500;
+      max-width: 90vw;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast.success {
+      border-left: 4px solid #10B981;
+    }
+
+    .toast.error {
+      border-left: 4px solid #EF4444;
+    }
+
+    /* Fade in animation */
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .container {
+        padding: 20px !important;
+      }
+
+      .metric-value {
+        font-size: 24px;
+      }
+
+      input[type="text"] {
+        font-size: 16px; /* Prevent iOS zoom on input focus */
+      }
+    }
