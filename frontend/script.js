@@ -17,7 +17,7 @@ setTimeout(() => {
           gen_counter.innerText = gen_count;
         })
         .catch(err => console.error("Error fetching gen count:", err));
-    }, 3000);
+    }, 1000);
   };
 
   gen_count_fun();
@@ -32,7 +32,7 @@ setTimeout(() => {
           red_counter.innerText = red_count;
         })
         .catch(err => console.error("Error fetching redirect count:", err));
-    }, 3000);
+    }, 1000);
   };
 
   red_count_fun();
