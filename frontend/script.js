@@ -17,7 +17,7 @@ setTimeout(() => {
           gen_counter.innerText = gen_count;
         })
         .catch(err => console.error("Error fetching gen count:", err));
-    }, 1000);
+    }, 3000);
   };
 
   gen_count_fun();
@@ -32,11 +32,11 @@ setTimeout(() => {
           red_counter.innerText = red_count;
         })
         .catch(err => console.error("Error fetching redirect count:", err));
-    }, 1000);
+    }, 3000);
   };
 
   red_count_fun();
-}, 500);
+}, 800);
 
     // ✅ دالة لتقصير الرابط (محاكاة)
     function shortenUrl() {
