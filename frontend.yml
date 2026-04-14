@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: url-frontend-dep
   labels:
-    app: url-frontend-dep
+    app: url-frontend
     project: url-shortener
 spec:
   replicas: 2
@@ -36,7 +36,8 @@ apiVersion: v1
 kind: Service
 metadata: 
   name: url-frontend-srv
-  project: url-shortener
+  labels:
+    project: url-shortener
 spec:
   selector:
     app: url-frontend

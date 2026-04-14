@@ -59,7 +59,8 @@ metadata:
 spec:
   selector:
     app: url-backend
-    project: url-shortener
+    labels:
+      project: url-shortener
   ports:
   - protocol: TCP
     port: 7000
