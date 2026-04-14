@@ -1,22 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongodb-dep
+  name: url-mongodb-dep
   labels:
-    app: mongodb
+    app: url-mongodb
+    project: url-shortener
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mongodb
+      app: url-mongodb
   template:
     metadata:
-      name: mongodb-pod
+      name: url-mongodb-pod
       labels:
-        app: mongodb
+        app: url-mongodb
+        project: url-shortener
     spec:
       containers:
-      - name: mongodb-con
+      - name: url-mongodb-con
         image: mongo:6.0
         ports:
         - containerPort: 27017
@@ -35,10 +37,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb-service
+  name: url-mongodb-srv
+  project: url-shortener
 spec:
   selector:
-    app: mongodb
+    app: url-mongodb
   ports:
   - protocol: TCP
     port: 27017

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: config-map
+  name: url-config-map
 data:
   db_host: mongodb-service
   BACK_HOST: "url.ahmedkabil.me"

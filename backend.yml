@@ -1,22 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-dep
+  name: url-backend-dep
   labels:
-    app: backend
+    project: url-shortener
+    app: url-backend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: backend
+      app: url-backend
   template:
     metadata:
-      name: backend-pod
+      name: url-backend-pod
       labels:
-        app: backend
+        app: url-backend
+        project: url-shortener
     spec:
       containers:
-      - name: backend-con
+      - name: url-backend-con
         image: url-shortener-backend:latest
         imagePullPolicy: Never
         ports:
@@ -25,25 +27,25 @@ spec:
         - name: DB_HOST
           valueFrom:
             configMapKeyRef:
-              name: config-map
+              name: url-config-map
               key: db_host
 
         - name: DB_USER
           valueFrom:
             secretKeyRef:
-              name: secret
+              name: url-secret
               key: db_user
 
         - name: DB_PASS
           valueFrom:
             secretKeyRef:
-              name: secret
+              name: url-secret
               key: db_pass
 
         - name: HOST
           valueFrom:
             configMapKeyRef:
-              name: config-map
+              name: url-config-map
               key: BACK_HOST
 
         - name: PORT
@@ -53,10 +55,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-srv
+  name: url-backend-srv
 spec:
   selector:
-    app: backend
+    app: url-backend
+    project: url-shortener
   ports:
   - protocol: TCP
     port: 7000
