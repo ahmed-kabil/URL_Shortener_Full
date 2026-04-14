@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-dep
+  labels:
+    app: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      name: backend-pod
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend-con
+        image: url-shortener-backend:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 7000
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: config-map
+              key: db_host
+
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: secret
+              key: db_user
+
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: secret
+              key: db_pass
+
+        - name: HOST
+          valueFrom:
+            configMapKeyRef:
+              name: config-map
+              key: BACK_HOST
+
+        - name: PORT
+          value: "7000"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-srv
+spec:
+  selector:
+    app: backend
+  ports:
+  - protocol: TCP
+    port: 7000
+    targetPort: 7000
+
+        
