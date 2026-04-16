@@ -17,6 +17,7 @@ ssh -t kube@192.168.0.179 "sudo ctr -n k8s.io images import /tmp/url-shortener-f
 # sudo ctr -n k8s.io images import url-shortener-frontend.tar
 echo "Images loaded into the cluster successfully."
 echo "deleting old kubernetes resources if they exist..."
+kubectl delete -f url-pvc.yml || true
 kubectl delete -f config-map.yml   || true
 kubectl delete -f secret.yml   || true
 kubectl delete -f tls-secret.yml   || true
@@ -25,6 +26,7 @@ kubectl delete -f backend.yml   || true
 kubectl delete -f frontend.yml   || true
 kubectl delete -f ingress.yml   || true
 echo "Applying Kubernetes manifests..."
+kubectl apply -f url-pvc.yml 
 kubectl apply -f config-map.yml
 kubectl apply -f secret.yml
 kubectl apply -f tls-secret.yml
