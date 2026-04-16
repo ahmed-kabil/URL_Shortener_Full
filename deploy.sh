@@ -9,8 +9,12 @@ echo "Frontend image built successfully."
 echo "copy the images to the cluster"
 docker save url-shortener-backend:latest > url-shortener-backend.tar
 docker save url-shortener-frontend:latest > url-shortener-frontend.tar
-sudo ctr -n k8s.io images import url-shortener-backend.tar
-sudo ctr -n k8s.io images import url-shortener-frontend.tar
+scp url-shortener-backend.tar kube@192.168.0.179:/tmp
+scp url-shortener-frontend.tar kube@192.168.0.179:/tmp
+ssh -t kube@192.168.0.179 "sudo ctr -n k8s.io images import /tmp/url-shortener-backend.tar"
+ssh -t kube@192.168.0.179 "sudo ctr -n k8s.io images import /tmp/url-shortener-frontend.tar"
+# sudo ctr -n k8s.io images import url-shortener-backend.tar
+# sudo ctr -n k8s.io images import url-shortener-frontend.tar
 echo "Images loaded into the cluster successfully."
 echo "deleting old kubernetes resources if they exist..."
 kubectl delete -f config-map.yml   || true
