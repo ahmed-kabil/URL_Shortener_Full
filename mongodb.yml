@@ -15,12 +15,12 @@ spec:
     - metadata:
         name: mongo-vol
       spec:
-        storageClassName: manual
+        storageClassName: local-manual
         accessModes: 
           - ReadWriteOnce
         resources:
           requests:
-            storage: 200Mi
+            storage: 500Mi
   template:
     metadata:
       labels:

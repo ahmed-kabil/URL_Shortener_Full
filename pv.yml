@@ -4,10 +4,10 @@ metadata:
   name: url-pv
 spec:
   capacity:
-    storage: 2Gi
+    storage: 500Mi
   accessModes:
     - ReadWriteOnce
-  storageClassName: manual
+  storageClassName: local-manual
   persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: "/mnt/data"
