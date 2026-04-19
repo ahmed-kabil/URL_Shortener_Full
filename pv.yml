@@ -9,5 +9,13 @@ spec:
     - ReadWriteOnce
   storageClassName: local-manual
   persistentVolumeReclaimPolicy: Retain
-  hostPath:
+  local:
     path: "/mnt/data"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - ecs-a7ed   # 👈 replace with your node name

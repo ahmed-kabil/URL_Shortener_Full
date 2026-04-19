@@ -28,7 +28,8 @@ spec:
         project: url-shortener
     spec:
       containers:
-      - image: mongo:6.0
+      - name: url-mongodb-con
+        image: mongo:6.0
         volumeMounts:
           - name: mongo-vol
             mountPath: /data/db
