@@ -7,7 +7,7 @@ require('dotenv').config();
 const db_host = process.env.DB_HOST ;
 const db_user = process.env.DB_USER ;
 const db_pass = process.env.DB_PASS ;
-const url = `mongodb://${db_user}:${db_pass}@${db_host}/?authSource=admin`;
+const url = `mongodb://url-mongodb-sfs-0.url-mongodb-headless-srv:27017,url-mongodb-sfs-1.url-mongodb-headless-srv:27017,url-mongodb-sfs-2.url-mongodb-headless-srv:27017/?replicaSet=rs0&readPreference=secondaryPreferred`;
 
 
 const app = express();
@@ -27,7 +27,7 @@ mongoose.connect(url)
   .then(() => {
     console.log("✅ Connected to the DB");
     app.listen(port, () => {
-      console.log(`🚀 Server running at http://${host}:${port}`);
+      console.log(`🚀 Server running at https://${host}`);
     });
   })
   .catch((err) => console.error("❌ DB Connection Error:", err));

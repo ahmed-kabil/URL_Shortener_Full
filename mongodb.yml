@@ -1,53 +1,61 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: url-mongodb-dep
+  name: url-mongodb-sfs
   labels:
     app: url-mongodb
     project: url-shortener
 spec:
-  replicas: 1
+  replicas: 3
+  serviceName: url-mongodb-headless-srv
   selector:
     matchLabels:
       app: url-mongodb
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-vol
+      spec:
+        storageClassName: manual
+        accessModes: 
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 200Mi
   template:
     metadata:
-      name: url-mongodb-pod
       labels:
         app: url-mongodb
         project: url-shortener
     spec:
       containers:
-      - name: url-mongodb-con
-        image: mongo:6.0
+      - image: mongo:6.0
         volumeMounts:
           - name: mongo-vol
             mountPath: /data/db
         ports:
         - containerPort: 27017
-        env:
-        - name: MONGO_INITDB_ROOT_USERNAME
-          valueFrom: 
-            secretKeyRef:
-              name: url-secret
-              key: db_user
-        - name: MONGO_INITDB_ROOT_PASSWORD
-          valueFrom: 
-            secretKeyRef:
-              name: url-secret
-              key: db_pass
-      volumes:
-        - name: mongo-vol
-          persistentVolumeClaim:
-            claimName: url-pvc
+        args: ["--replSet", "rs0", "--bind_ip_all"]
+        # env:
+        # - name: MONGO_INITDB_ROOT_USERNAME
+        #   valueFrom: 
+        #     secretKeyRef:
+        #       name: url-secret
+        #       key: db_user
+        # - name: MONGO_INITDB_ROOT_PASSWORD
+        #   valueFrom: 
+        #     secretKeyRef:
+        #       name: url-secret
+        #       key: db_pass
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: url-mongodb-srv
+  name: url-mongodb-headless-srv
   labels:
     project: url-shortener
 spec:
+  clusterIP: None
   selector:
     app: url-mongodb
   ports:

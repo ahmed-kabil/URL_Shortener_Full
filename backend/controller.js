@@ -1,5 +1,6 @@
 const { Url, GenCount, RedCount } = require("./model");
 const { nanoid } = require("nanoid");
+const mongoose = require("mongoose");
 
 const shortenLink = async (req, res) => {
    try{
@@ -14,7 +15,11 @@ const shortenLink = async (req, res) => {
 
       let new_shortening = new Url(entry);
       // console.log(new_shortening)
-     await new_shortening.save()
+      console.log("iShortining ...")
+      const info = await mongoose.connection.db.admin().command({ hello: 1 });
+      console.log("Handled by:", info.me);
+      
+      await new_shortening.save()
      await GenCount.updateOne({}, { $inc: { count: 1 } }, { upsert: true });
      res.status(201).json({status: "success",data: {url: new_shortening}});
       }catch(err){
@@ -32,18 +37,20 @@ const redirectLink = async (req, res) => {
 
    try{
     console.log("redirecting...")
-
-      const url_entry = await Url.findOne({ shorten_text: req.params.text });
+    
+    const url_entry = await Url.findOne({ shorten_text: req.params.text }).read("primary");
     //   console.log(url_entry)
-      if(!url_entry){
-     
+    const info = await mongoose.connection.db.admin().command({ hello: 1 });
+    console.log("Handled by:", info.me);
+    if(!url_entry){
+      
          res.status(404).json({status: "fail",data: null})
-      }
+        }
     //   console.log("hit")
       res.redirect(url_entry.long_url);
       await RedCount.updateOne({}, { $inc: { count: 1 } }, { upsert: true });
    }catch(err){
-      res.status(400).json({
+     res.status(400).json({
          status: "error",
          message: err.message
       })
@@ -53,8 +60,13 @@ const redirectLink = async (req, res) => {
 
 const getgencount = async (req, res) => {
   try {
-    const gencount = await GenCount.findOne({});
-
+    const gencount = await GenCount.findOne({}).read("secondary");
+    console.log("Getting the geration count ...")
+    const info = await mongoose.connection.db.admin().command(
+  { hello: 1 },
+  { readPreference: "secondaryPreferred" }
+);
+    console.log("Handled by:", info.me);
     // if not found, return 0 or handle it
     if (!gencount) {
       return res.json({ count: 0 });
@@ -70,8 +82,13 @@ const getgencount = async (req, res) => {
 const getredcount = async (req, res) => {
 
   try {
-    const redcount = await RedCount.findOne({});
-
+    const redcount = await RedCount.findOne({}).read("secondary");
+    console.log("Getting the redirection count ...")
+       const info = await mongoose.connection.db.admin().command(
+  { hello: 1 },
+  { readPreference: "secondaryPreferred" }
+);
+    console.log("Handled by:", info.me);
     // if not found, return 0 or handle it
     if (!redcount) {
       return res.json({ count: 0 });
