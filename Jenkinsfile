@@ -2,7 +2,6 @@ pipeline {
     agent any
     
     environment {
-        // Use underscores; hyphens are not allowed in Groovy variable names
         FRONTEND_IMAGE = "ahmedkabil/url-frontend"
         BACKEND_IMAGE  = "ahmedkabil/url-backend"
     }
@@ -10,6 +9,8 @@ pipeline {
     stages {
         stage('SCM Checkout') {
             steps {
+                // This ensures the workspace is clean before starting
+                deleteDir()
                 checkout scm
             }
         }
@@ -17,8 +18,8 @@ pipeline {
         stage("Building Frontend Image") {
             steps {
                 dir("frontend") {
-                    // Added a dot '.' at the end of the build command to specify context
-                    sh "docker build -t ${ENV.FRONTEND_IMAGE}:1.${BUILD_NUMBER} ."
+                    // Using ${env.VARIABLE_NAME} is the safest way to reference environment variables
+                    sh "docker build -t ${env.FRONTEND_IMAGE}:1.${env.BUILD_NUMBER} ."
                 }
             }
         }
@@ -26,18 +27,17 @@ pipeline {
         stage("Building Backend Image") {
             steps {
                 dir("backend") {
-                    sh "docker build -t ${ENV.BACKEND_IMAGE}:1.${BUILD_NUMBER} ."
+                    sh "docker build -t ${env.BACKEND_IMAGE}:1.${env.BUILD_NUMBER} ."
                 }
             }
         }
 
         stage("Push to Docker Hub") {
             steps {
-                // Corrected spelling: withCredentials and credentialsId
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASSWORD')]) {
                     sh "echo ${HUB_PASSWORD} | docker login -u ${HUB_USER} --password-stdin"
-                    // sh "docker push ${ENV.FRONTEND_IMAGE}:1.${BUILD_NUMBER}"
-                    // sh "docker push ${ENV.BACKEND_IMAGE}:1.${BUILD_NUMBER}"
+                    sh "docker push ${env.FRONTEND_IMAGE}:1.${env.BUILD_NUMBER}"
+                    sh "docker push ${env.BACKEND_IMAGE}:1.${env.BUILD_NUMBER}"
                 }
             }
         }
@@ -45,7 +45,6 @@ pipeline {
     
     post {
         always {
-            // Good practice to logout
             sh "docker logout"
         }
     }
