@@ -41,13 +41,14 @@ pipeline {
                 }
             }
         }
-    }
 
        stage("update mainfests"){
         steps{
            sh "sed -i 's|image: .*|image: ${env.FRONTEND_IMAGE}:1.${env.BUILD_NUMBER}|' frontend.yml"
         }
        }
+    }
+
     
     post {
         always {
