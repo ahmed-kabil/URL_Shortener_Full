@@ -109,10 +109,20 @@ pipeline {
             echo "from inside the push the updated mainfestes stage"
             sshagent(['github-ssh']){
                 sh '''
-                    git config user.name "jenkins"
-                    git config user.email "jenkins@local"
-                    git commit -am "updated manifests" || echo "no change to commit"
-                    git push origin main
+                # 1. Fix the Remote URL to use SSH (so ssh-agent actually works)
+                git remote set-url origin git@github.com:ahmed-kabil/URL_Shortener_Full.git
+
+                # 2. Identify
+                git config user.name "jenkins"
+                git config user.email "jenkins@local"
+
+                # 3. Add and Commit
+                git add frontend.yml backend.yml
+                git commit -m "updated manifests build ${BUILD_NUMBER}" || echo "no changes"
+
+                # 4. Push the current HEAD to the remote 'main' branch
+                # This fixes the 'src refspec main does not match' error
+                git push origin HEAD:main
                 '''
             }
         }
