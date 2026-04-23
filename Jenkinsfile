@@ -76,10 +76,10 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASSWORD')]) {
                     sh "echo ${HUB_PASSWORD} | docker login -u ${HUB_USER} --password-stdin"
                     script{
-                        if(FRONTEND_CHANGED){
+                        if(FRONTEND_CHANGED == "true"){
                             sh "docker push ${env.FRONTEND_IMAGE}:1.${env.BUILD_NUMBER}"
                         }
-                        if(BACKEND_CHANGED){
+                        if(BACKEND_CHANGED == "true"){
                             sh "docker push ${env.BACKEND_IMAGE}:1.${env.BUILD_NUMBER}"
                         }
                     }
@@ -93,10 +93,10 @@ pipeline {
             when{expression{return FRONTEND_CHANGED == "true" || BACKEND_CHANGED == "true" }}
         steps{
             script{
-                if(FRONTEND_CHANGED){
+                if(FRONTEND_CHANGED == "true"){
                    sh "sed -i 's|image: .*|image: ${env.FRONTEND_IMAGE}:1.${env.BUILD_NUMBER}|' frontend.yml"
                 }
-                if(BACKEND_CHANGED){
+                if(BACKEND_CHANGED == "true"){
                    sh "sed -i 's|image: .*|image: ${env.BACKEND_IMAGE}:1.${env.BUILD_NUMBER}|' backend.yml"
                 }
             }
