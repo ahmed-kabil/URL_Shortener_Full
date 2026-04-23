@@ -107,7 +107,7 @@ pipeline {
         when{expression{return FRONTEND_CHANGED == "true" || BACKEND_CHANGED == "true" }}
         steps{
             echo "from inside the push the updated mainfestes stage"
-            sshagent(['github']){
+            sshagent(['github-ssh']){
                 sh '''
                     git config user.name "jenkins"
                     git config user.email "jenkins@local"
