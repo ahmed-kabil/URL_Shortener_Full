@@ -5,8 +5,7 @@ pipeline {
         FRONTEND_IMAGE = "ahmedkabil/url-frontend"
         BACKEND_IMAGE  = "ahmedkabil/url-backend"
 
-        FRONTEND_CHANGED = false
-        BACKEND_CHANGED = false
+
     }
     
     stages {
@@ -18,11 +17,27 @@ pipeline {
             }
         }
 
+        stage("set environment vars"){
+            steps{
+                script{
+                    env.FRONTEND_CHANGED = false
+                    evn.BACKEND_CHANGED = false
+                }
+            }
+        }
+
         stage("detect changes"){
             steps{
                 script {
-                    FRONTEND_CHANGED = sh(script: "git diff --name-only origin/main...HEAD  | grep frontend" , returnStatus: true) == 0
-                    BACKEND_CHANGED = sh(script: "git diff --name-only origin/main...HEAD  | grep backend" , returnStatus: true) == 0
+              
+                    def changes = sh(script: "git diff --name-only HEAD~1  HEAD",returnStdout: true).trim()
+                    if (changes.contains("frontend/")){
+                        evn.FRONTEND_CHANGED = true
+                    }
+                    if (changes.contains("backend/")){
+                        evn.BACKEND_CHANGED = true
+                    }                    
+                
                 }
             }
         }
@@ -31,7 +46,7 @@ pipeline {
             when{expression{return FRONTEND_CHANGED}}
             steps {
                 dir("frontend") {
-                    // Using ${env.VARIABLE_NAME} is the safest way to reference environment variables
+                   
                     sh "docker build -t ${env.FRONTEND_IMAGE}:1.${env.BUILD_NUMBER} ."
                 }
             }
@@ -83,14 +98,17 @@ pipeline {
        stage("push the updated mainfests"){
         when{expression{return FRONTEND_CHANGED == true || BACKEND_CHANGED == true }}
         steps{
-           sh 'git config user.name jenkins'
-           sh 'git commit -am "updated manifests" || echo "no change to commit"'
-           sh 'git push origin main'
+            sshagent(['github']){
+                sh '''
+                    git config user.name jenkins
+                    git commit -am "updated manifests" || echo "no change to commit"
+                    git push origin main
+                '''
+            }
         }
        }
     }
 
-    
     post {
         always {
             sh "docker logout"
