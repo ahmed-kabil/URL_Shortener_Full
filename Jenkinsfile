@@ -33,11 +33,11 @@ pipeline {
                     def changes = sh(script: "git diff --name-only HEAD~1  HEAD",returnStdout: true).trim()
                     if (changes.contains("frontend/")){
                         echo "changes contain the frontend/"
-                        evn.FRONTEND_CHANGED = true
+                        env.FRONTEND_CHANGED = true
                     }
                     if (changes.contains("backend/")){
                         echo "changes contain the backend/"
-                        evn.BACKEND_CHANGED = true
+                        env.BACKEND_CHANGED = true
                     }                    
                 
                 }
