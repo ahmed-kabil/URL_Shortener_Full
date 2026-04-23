@@ -106,9 +106,11 @@ pipeline {
        stage("push the updated mainfests"){
         when{expression{return FRONTEND_CHANGED == "true" || BACKEND_CHANGED == "true" }}
         steps{
+            echo "from inside the push the updated mainfestes stage"
             sshagent(['github']){
                 sh '''
-                    git config user.name jenkins
+                    git config user.name "jenkins"
+                    git config user.email "jenkins@local"
                     git commit -am "updated manifests" || echo "no change to commit"
                     git push origin main
                 '''
