@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: url-frontend-con
-        image: url-shortener-frontend:latest
+        image: ahmedkabil/url-frontend:1.29
         imagePullPolicy: Never
         ports:
         - containerPort: 80
