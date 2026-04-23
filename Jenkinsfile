@@ -29,22 +29,28 @@ pipeline {
         stage("detect changes"){
             steps{
                 script {
-              
+                echo "start the logic to deside if the servie contain changes or not"
                     def changes = sh(script: "git diff --name-only HEAD~1  HEAD",returnStdout: true).trim()
                     if (changes.contains("frontend/")){
+                        echo "changes contain the frontend/"
                         evn.FRONTEND_CHANGED = true
                     }
                     if (changes.contains("backend/")){
+                        echo "changes contain the backend/"
                         evn.BACKEND_CHANGED = true
                     }                    
                 
                 }
+
+                echo "the variable FRONTEND_CHANGED  has a value of : ${FRONTEND_CHANGED}"
+                echo "the variable BACKEND_CHANGED  has a value of : ${BACKEND_CHANGED}"
             }
         }
         
         stage("Building Frontend Image") {
             when{expression{return FRONTEND_CHANGED}}
             steps {
+                echo "the build fronend has meet the condition and start building the fronend"
                 dir("frontend") {
                    
                     sh "docker build -t ${env.FRONTEND_IMAGE}:1.${env.BUILD_NUMBER} ."
@@ -56,6 +62,7 @@ pipeline {
             
             when{expression{return BACKEND_CHANGED}}
             steps {
+                echo "the build backend has meet the condition and start building the backend"
                 dir("backend") {
                     sh "docker build -t ${env.BACKEND_IMAGE}:1.${env.BUILD_NUMBER} ."
                 }
