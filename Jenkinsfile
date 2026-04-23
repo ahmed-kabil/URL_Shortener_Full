@@ -21,7 +21,7 @@ pipeline {
             steps{
                 script{
                     env.FRONTEND_CHANGED = false
-                    evn.BACKEND_CHANGED = false
+                    env.BACKEND_CHANGED = false
                 }
             }
         }
