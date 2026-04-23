@@ -48,7 +48,7 @@ pipeline {
         }
         
         stage("Building Frontend Image") {
-            when{expression{return FRONTEND_CHANGED}}
+            when{expression{return FRONTEND_CHANGED == true}}
             steps {
                 echo "the build fronend has meet the condition and start building the fronend"
                 dir("frontend") {
@@ -60,7 +60,7 @@ pipeline {
 
         stage("Building Backend Image") {
             
-            when{expression{return BACKEND_CHANGED}}
+            when{expression{return BACKEND_CHANGED == true}}
             steps {
                 echo "the build backend has meet the condition and start building the backend"
                 dir("backend") {
