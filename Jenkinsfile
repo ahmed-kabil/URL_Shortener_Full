@@ -20,8 +20,8 @@ pipeline {
         stage("set environment vars"){
             steps{
                 script{
-                    env.FRONTEND_CHANGED = false
-                    env.BACKEND_CHANGED = false
+                    env.FRONTEND_CHANGED = "false"
+                    env.BACKEND_CHANGED = "false"
                 }
             }
         }
@@ -30,14 +30,15 @@ pipeline {
             steps{
                 script {
                 echo "start the logic to deside if the servie contain changes or not"
-                    def changes = sh(script: "git diff --name-only HEAD~1  HEAD",returnStdout: true).trim()
+                    def changes = sh(script: "git diff --name-only HEAD~1  HEAD",returnStdout: "true").trim()
                     if (changes.contains("frontend/")){
                         echo "changes contain the frontend/"
-                        env.FRONTEND_CHANGED = true
+                        env.FRONTEND_CHANGED = "true"
                     }
                     if (changes.contains("backend/")){
                         echo "changes contain the backend/"
-                        env.BACKEND_CHANGED = true
+                        env.BACKEND_CHANGED = "true"
+                        
                     }                    
                 
                 }
@@ -48,7 +49,7 @@ pipeline {
         }
         
         stage("Building Frontend Image") {
-            when{expression{return FRONTEND_CHANGED == true}}
+            when{expression{return FRONTEND_CHANGED == "true"}}
             steps {
                 echo "the build fronend has meet the condition and start building the fronend"
                 dir("frontend") {
@@ -60,7 +61,7 @@ pipeline {
 
         stage("Building Backend Image") {
             
-            when{expression{return BACKEND_CHANGED == true}}
+            when{expression{return BACKEND_CHANGED == "true"}}
             steps {
                 echo "the build backend has meet the condition and start building the backend"
                 dir("backend") {
@@ -70,7 +71,7 @@ pipeline {
         }
 
         stage("Push to Docker Hub") {
-            when{expression{return FRONTEND_CHANGED == true || BACKEND_CHANGED == true }}
+            when{expression{return FRONTEND_CHANGED == "true" || BACKEND_CHANGED == "true" }}
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASSWORD')]) {
                     sh "echo ${HUB_PASSWORD} | docker login -u ${HUB_USER} --password-stdin"
@@ -89,7 +90,7 @@ pipeline {
         }
 
        stage("update mainfests"){
-            when{expression{return FRONTEND_CHANGED == true || BACKEND_CHANGED == true }}
+            when{expression{return FRONTEND_CHANGED == "true" || BACKEND_CHANGED == "true" }}
         steps{
             script{
                 if(FRONTEND_CHANGED){
@@ -103,7 +104,7 @@ pipeline {
         }
        }
        stage("push the updated mainfests"){
-        when{expression{return FRONTEND_CHANGED == true || BACKEND_CHANGED == true }}
+        when{expression{return FRONTEND_CHANGED == "true" || BACKEND_CHANGED == "true" }}
         steps{
             sshagent(['github']){
                 sh '''
