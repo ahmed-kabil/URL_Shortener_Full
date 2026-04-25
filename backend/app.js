@@ -5,9 +5,9 @@ require('dotenv').config();
 
 
 const db_host = process.env.DB_HOST ;
-const db_user = process.env.DB_USER ;
-const db_pass = process.env.DB_PASS ;
-const url = `mongodb://url-mongodb-sfs-0.url-mongodb-headless-srv:27017,url-mongodb-sfs-1.url-mongodb-headless-srv:27017,url-mongodb-sfs-2.url-mongodb-headless-srv:27017/?replicaSet=rs0&readPreference=secondaryPreferred`;
+// const db_user = process.env.DB_USER ;
+// const db_pass = process.env.DB_PASS ;
+// const url = `mongodb://url-mongodb-sfs-0.url-mongodb-headless-srv:27017,url-mongodb-sfs-1.url-mongodb-headless-srv:27017,url-mongodb-sfs-2.url-mongodb-headless-srv:27017/?replicaSet=rs0&readPreference=secondaryPreferred`;
 
 
 const app = express();
@@ -23,7 +23,7 @@ const router = require("./router.js");
 app.use("/", router);
 
 // Connect to MongoDB
-mongoose.connect(url)
+mongoose.connect(db_host)
   .then(() => {
     console.log("✅ Connected to the DB");
     app.listen(port, () => {

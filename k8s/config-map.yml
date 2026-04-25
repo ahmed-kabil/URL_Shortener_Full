@@ -4,5 +4,5 @@ metadata:
   name: url-config-map
   namespace: url-short
 data:
-  db_host: url-mongodb-sfs-0.url-mongodb-headless-srv
+  db_host: "mongodb://url-mongodb-sfs-0.url-mongodb-headless-srv:27017,url-mongodb-sfs-1.url-mongodb-headless-srv:27017,url-mongodb-sfs-2.url-mongodb-headless-srv:27017/?replicaSet=rs0&readPreference=secondaryPreferred"
   BACK_HOST: "url.ahmedkabil.me"
