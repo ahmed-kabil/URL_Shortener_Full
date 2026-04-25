@@ -6,6 +6,8 @@ metadata:
   labels:
     app: url-mongodb
     project: url-shortener
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   replicas: 3
   serviceName: url-mongodb-headless-srv
