@@ -27,6 +27,7 @@ kubectl delete -f k8s/frontend.yml   || true
 kubectl delete -f k8s/ingress.yml   || true
 echo "Applying Kubernetes manifests..."
 #kubectl apply -f url-pvc.yml
+kubectl create namespace url-short
 kubectl apply -f k8s/config-map.yml
 kubectl apply -f k8s/secret.yml
 kubectl apply -f k8s/tls-secret.yml

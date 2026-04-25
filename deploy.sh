@@ -1,6 +1,6 @@
 #! /bin/bash
 echo "Applying Kubernetes manifests..."
-
+kubectl create namespace url-short
 kubectl apply -f k8s/config-map.yml
 kubectl apply -f k8s/secret.yml
 kubectl apply -f k8s/tls-secret.yml
