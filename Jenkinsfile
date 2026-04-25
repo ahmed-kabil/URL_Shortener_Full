@@ -43,8 +43,6 @@ pipeline {
                 
                 }
 
-                echo "the variable FRONTEND_CHANGED  has a value of : ${FRONTEND_CHANGED}"
-                echo "the variable BACKEND_CHANGED  has a value of : ${BACKEND_CHANGED}"
             }
         }
         
@@ -94,10 +92,10 @@ pipeline {
         steps{
             script{
                 if(FRONTEND_CHANGED == "true"){
-                   sh "sed -i 's|image: .*|image: ${env.FRONTEND_IMAGE}:1.${env.BUILD_NUMBER}|' frontend.yml"
+                   sh "sed -i 's|image: .*|image: ${env.FRONTEND_IMAGE}:1.${env.BUILD_NUMBER}|' k8s/frontend.yml"
                 }
                 if(BACKEND_CHANGED == "true"){
-                   sh "sed -i 's|image: .*|image: ${env.BACKEND_IMAGE}:1.${env.BUILD_NUMBER}|' backend.yml"
+                   sh "sed -i 's|image: .*|image: ${env.BACKEND_IMAGE}:1.${env.BUILD_NUMBER}|' k8s/backend.yml"
                 }
             }
    

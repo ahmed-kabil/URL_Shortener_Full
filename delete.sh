@@ -1,9 +1,9 @@
 #! /bin/bash
 echo "deleting old kubernetes resources if they exist..."
-kubectl delete -f config-map.yml   || true
-kubectl delete -f secret.yml   || true
-kubectl delete -f tls-secret.yml   || true
-kubectl delete -f mongodb.yml   || true
-kubectl delete -f backend.yml   || true
-kubectl delete -f frontend.yml   || true
-kubectl delete -f ingress.yml   || true
+kubectl delete -f k8s/config-map.yml   || true
+kubectl delete -f k8s/secret.yml   || true
+kubectl delete -f k8s/tls-secret.yml   || true
+kubectl delete -f k8s/mongodb.yml   || true
+kubectl delete -f k8s/backend.yml   || true
+kubectl delete -f k8s/frontend.yml   || true
+kubectl delete -f k8s/ingress.yml   || true
