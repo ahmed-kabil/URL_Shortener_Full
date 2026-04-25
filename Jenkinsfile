@@ -115,7 +115,7 @@ pipeline {
                 git config user.email "jenkins@local"
 
                 # 3. Add and Commit
-                git add frontend.yml backend.yml
+                git add k8s/frontend.yml k8s/backend.yml
                 git commit -m "updated manifests build ${BUILD_NUMBER}" || echo "no changes"
 
                 # 4. Push the current HEAD to the remote 'main' branch

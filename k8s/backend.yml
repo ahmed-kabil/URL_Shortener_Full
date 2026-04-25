@@ -20,8 +20,8 @@ spec:
     spec:
       containers:
       - name: url-backend-con
-        image: url-shortener-backend:latest
-        imagePullPolicy: Never
+        image: ahmedkabil/url-backend:1.30
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 7000
         env:

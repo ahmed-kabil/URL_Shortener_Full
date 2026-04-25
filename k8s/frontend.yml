@@ -21,7 +21,7 @@ spec:
       containers:
       - name: url-frontend-con
         image: ahmedkabil/url-frontend:1.29
-        imagePullPolicy: Never
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
         env:
