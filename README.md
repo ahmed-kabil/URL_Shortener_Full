@@ -113,6 +113,14 @@ Developer → GitHub → Jenkins (CI) → Docker Hub → GitHub (K8s manifests) 
 
 ---
 
+## 🌐 Application Flow (Jenkins Build Job Started)     
+     
+📸 Jenkins Pipeline:
+
+![Jenkins Pipeline](./screenshots/jenkins-trigered.png)
+
+---
+
 ## 🌐 Application Flow (Updated Manifests)     
      
 📸 Updated Manifests in GitHub:
