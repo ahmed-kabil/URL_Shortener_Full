@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: url-frontend-con
-        image: ahmedkabil/url-frontend:1.59
+        image: ahmedkabil/url-frontend:1.61
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
