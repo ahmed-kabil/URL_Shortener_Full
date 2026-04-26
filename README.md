@@ -2,7 +2,7 @@
 
 ## 📌 Overview
 
-This project is a **full-stack URL shortening application** built completely from scratch, combined with a **production-style CI/CD pipeline**.
+This project is a **full-stack URL shortening application** built completely from scratch by me, combined with a **production-style CI/CD pipeline**.
 
 It demonstrates how modern systems are built, containerized, and deployed automatically using:
 
@@ -71,9 +71,6 @@ Developer → GitHub → Jenkins (CI) → Docker Hub → GitHub (K8s manifests) 
 * Updates Kubernetes manifests with new image tag
 * Pushes updated manifests back to GitHub
 
-📸 Jenkins Pipeline:
-
-![Jenkins Pipeline](./screenshots/jenkins-trigered.png)
 
 ---
 
