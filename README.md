@@ -58,13 +58,10 @@ Developer → GitHub → Jenkins (CI) → Docker Hub → GitHub (K8s manifests) 
 
 ### Step 1: Code Push
 
-* Change the background color
 * Developer pushes code to GitHub
 * Webhook triggers Jenkins pipeline
 
-📸 Push Code Changes:
 
-![Push Code](./screenshots/push-code.png)
 
 ### Step 2: Jenkins (CI)
 
@@ -83,10 +80,6 @@ Developer → GitHub → Jenkins (CI) → Docker Hub → GitHub (K8s manifests) 
 ### Step 3: GitOps Trigger
 
 * Argo CD detects changes in Kubernetes manifests
-
-📸 Updated Manifests in GitHub:
-
-![GitHub Update](./screenshots/updated-manifets.png)
 
 ---
 
@@ -112,6 +105,22 @@ Developer → GitHub → Jenkins (CI) → Docker Hub → GitHub (K8s manifests) 
 📸 Initial Version:
 
 ![App Before](./screenshots/app-before.png)
+
+---
+
+## 🌐 Application Flow (Push Code)
+* Change the background color
+📸 Push Code Changes:
+
+![Push Code](./screenshots/push-code.png)
+
+---
+
+## 🌐 Application Flow (Updated Manifests)     
+     
+📸 Updated Manifests in GitHub:
+
+![GitHub Update](./screenshots/updated-manifets.png)
 
 ---
 
