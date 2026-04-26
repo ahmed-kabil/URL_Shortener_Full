@@ -6,6 +6,8 @@ metadata:
   labels:
     project: url-shortener
     app: url-backend
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   replicas: 2
   selector:
@@ -17,8 +19,6 @@ spec:
       labels:
         app: url-backend
         project: url-shortener
-      annotations:
-        argocd.argoproj.io/sync-wave: "2"
     spec:
       containers:
       - name: url-backend-con
