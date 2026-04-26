@@ -48,12 +48,23 @@ Developer → GitHub → Jenkins (CI) → Docker Hub → GitHub (K8s manifests) 
 
 ---
 
+<!-- ### App Before
+
+📸 App before changes:
+
+![App Before](./screenshots/app-before.png) -->
+
 ## 🚀 CI/CD Pipeline Flow
 
 ### Step 1: Code Push
 
+* Change the background color
 * Developer pushes code to GitHub
 * Webhook triggers Jenkins pipeline
+
+📸 Push Code Changes:
+
+![Push Code](./screenshots/push-code.png)
 
 ### Step 2: Jenkins (CI)
 
@@ -65,7 +76,7 @@ Developer → GitHub → Jenkins (CI) → Docker Hub → GitHub (K8s manifests) 
 
 📸 Jenkins Pipeline:
 
-![Jenkins Pipeline](./images/jenkins.png)
+![Jenkins Pipeline](./screenshots/jenkins-trigered.png)
 
 ---
 
@@ -75,7 +86,7 @@ Developer → GitHub → Jenkins (CI) → Docker Hub → GitHub (K8s manifests) 
 
 📸 Updated Manifests in GitHub:
 
-![GitHub Update](./images/github-update.png)
+![GitHub Update](./screenshots/updated-manifets.png)
 
 ---
 
@@ -100,7 +111,7 @@ Developer → GitHub → Jenkins (CI) → Docker Hub → GitHub (K8s manifests) 
 
 📸 Initial Version:
 
-![App Before](./images/app-before.png)
+![App Before](./screenshots/app-before.png)
 
 ---
 
@@ -108,7 +119,7 @@ Developer → GitHub → Jenkins (CI) → Docker Hub → GitHub (K8s manifests) 
 
 📸 Argo CD Syncing:
 
-![ArgoCD Sync](./images/argocd-sync.png)
+![ArgoCD Sync](./screenshots/argocd-sync.png)
 
 ---
 
@@ -120,7 +131,7 @@ After pushing new code, the full pipeline executes automatically.
 
 📸 Updated Version:
 
-![App After](./images/app-after.png)
+![App After](./screenshots/app-after.png)
 
 ---
 
