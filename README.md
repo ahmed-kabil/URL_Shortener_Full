@@ -104,6 +104,14 @@ Developer → GitHub → Jenkins (CI) → Docker Hub → GitHub (K8s manifests) 
 
 ---
 
+## ⚙️ CI/CD in Action (Argo CD Sync)
+
+📸 Argo CD Syncing:
+
+![ArgoCD Sync](./images/argocd-sync.png)
+
+---
+
 ## 🔄 Application Flow (After Update)
 
 After pushing new code, the full pipeline executes automatically.
@@ -148,23 +156,6 @@ After pushing new code, the full pipeline executes automatically.
 * Containerization with Docker
 * Kubernetes production patterns (StatefulSet, Ingress, ReplicaSets)
 * Automated image versioning and deployment
-
----
-
-## 📸 How to Add Your Images
-
-Create a folder called `images` in your repo:
-
-```bash
-mkdir images
-```
-
-Then add:
-
-* `app-before.png`
-* `jenkins.png`
-* `github-update.png`
-* `app-after.png`
 
 ---
 
