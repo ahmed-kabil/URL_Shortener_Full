@@ -106,7 +106,7 @@ Developer → GitHub → Jenkins (CI) → Docker Hub → GitHub (K8s manifests) 
 ---
 
 ## 🌐 Application Flow (Push Code)
-* Change the background color
+* Change the background color <br>
 📸 Push Code Changes:
 
 ![Push Code](./screenshots/push-code.png)
