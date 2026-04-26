@@ -17,6 +17,8 @@ spec:
       labels:
         app: url-backend
         project: url-shortener
+      annotations:
+        argocd.argoproj.io/sync-wave: "2"
     spec:
       containers:
       - name: url-backend-con

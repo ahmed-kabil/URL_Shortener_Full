@@ -4,7 +4,7 @@ metadata:
   name: init-job
   namespace: url-short
   annotations:
-    # argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   template:
     spec:
